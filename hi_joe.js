@@ -1,0 +1,63 @@
+function toggleBackground() {
+    const body = document.body;
+    if ((body.style.backgroundColor === 'grey')) {
+        body.style.backgroundColor = 'white';
+    } else {
+        body.style.backgroundColor = 'grey';
+    }
+}
+
+function help() {
+     alert('press the red butten to change background color to grey or white, and press the show circuits button to see some urls of some circuits i made and saved');
+}
+
+function loadCircuits() {
+    const container = document.getElementById('circuitsContainer');
+    
+    // Toggle visibility
+    if (container.style.display === 'block') {
+        container.style.display = 'none';
+        return;
+    }
+    
+    // Load URLs from falstad_circuits.txt
+    fetch('falstad_circuits.txt')
+        .then(response => response.text())
+        .then(text => {
+            // Parse the text file to extract URLs
+            const lines = text.split('\n');
+            const urls = [];
+            const labels = [];
+            
+            for (let line of lines) {
+                line = line.trim();
+                // Extract URLs that start with http
+                if (line.startsWith('https://') || line.startsWith('http://')) {
+                    urls.push(line);
+                }
+                else if (line.startsWith('Label:')) {
+                    labels.push(line.replace('Label:', '').trim());
+                }
+            }
+            
+            console.log('Loaded circuits:', urls);
+            console.log('Loaded labels:', labels);
+            
+            // Render URLs in the circuitsContainer div
+            container.innerHTML = ''; // Clear existing content
+            
+            urls.forEach((url, index) => {
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                link.textContent = labels[index] || `Circuit ${index + 1}`;
+                link.classList.add('circuit-link');
+                
+                container.appendChild(link);
+            });
+            
+            // Show the container
+            container.style.display = 'block';
+        })
+        .catch(error => console.error('Error loading circuits:', error));
+}
