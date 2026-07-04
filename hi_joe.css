@@ -1,74 +1,82 @@
 /* Reset the full screen layout */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: sans-serif;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
     transition: background-color 1s ease;
-    box-sizing: border-box;
+    background-color: rgb(248, 244, 244);
 }
 
 /* Parent container that arranges columns side-by-side */
 .screen-container {
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
 }
 
 /* Left side layout (25% width) */
 .left-side {
     width: 25%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: rgb(6, 180, 203); /* Subtle gray background to visually see the 25% split */
+    background-color: rgb(6, 180, 203);
+    padding: 20px 12px;
+    gap: 10px;
 }
 
 /* Right side layout (75% width) */
 .right-side {
     width: 75%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center; /* Keeps text and buttons perfectly centered inside the 75% space */
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
+    align-items: center;
+    padding: 20px 16px 24px;
 }
+
 .title-container {
     display: flex;
     align-items: center;
-    gap: 20px;
     justify-content: center;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
-h1 {/* joe george styling */
-    font-size: 5rem;
+h1 {
+    font-size: clamp(2rem, 5vw, 5rem);
     font-style: italic;
     font-weight: bold;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     color: rgba(2, 58, 24, 0.929);
     transition: color 0.3s ease;
+    text-align: center;
 }
 
+.red-btn,
+.help-btn,
+.circuits-btn {
+    width: min(100%, 220px);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
 .red-btn {
     background-color: red;
-    color: white;
-    border: none;
-    width: fit-content;
-    padding: 5px 10px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 8px;
     margin-top: 10px;
-    margin-left: 0px;
-    margin-right: 0px;
 }
 
 .red-btn:hover {
@@ -77,17 +85,7 @@ h1 {/* joe george styling */
 
 .help-btn {
     background-color: blue;
-    color: white;
-    border: none;
-    width: fit-content;
-    padding: 15px 30px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 5px;
     margin-top: 30px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
 }
 
 .help-btn:hover {
@@ -96,17 +94,7 @@ h1 {/* joe george styling */
 
 .circuits-btn {
     background-color: green;
-    color: white;
-    border: none;
-    width: fit-content;
-    padding: 15px 30px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 5px;
     margin-top: 8px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
 }
 
 .circuits-btn:hover {
@@ -118,6 +106,7 @@ h1 {/* joe george styling */
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
+    width: 100%;
     max-width: 600px;
     max-height: 400px;
     overflow-y: auto;
@@ -134,7 +123,7 @@ h1 {/* joe george styling */
     color: rgb(255, 255, 255);
     text-decoration: none;
     border-radius: 50px;
-    word-break: break-all;
+    word-break: break-word;
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
     margin-top: 10px;
@@ -142,4 +131,42 @@ h1 {/* joe george styling */
 
 .circuit-link:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .screen-container {
+        flex-direction: column;
+    }
+
+    .left-side,
+    .right-side {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .left-side {
+        padding: 16px 12px 12px;
+    }
+
+    .right-side {
+        padding: 16px 12px 24px;
+    }
+
+    h1 {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+    }
+
+    .red-btn,
+    .help-btn,
+    .circuits-btn {
+        width: 100%;
+        max-width: 280px;
+        font-size: 1rem;
+        padding: 12px 14px;
+    }
+
+    .circuits-container {
+        margin-top: 12px;
+        max-height: none;
+    }
 }
